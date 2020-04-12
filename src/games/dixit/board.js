@@ -22,16 +22,6 @@ export class DixitBoard extends React.Component {
         isMultiplayer: PropTypes.bool,
     };
 
-    componentDidMount() {
-        console.log(this.props.isActive);
-        if (this.props.isActive) {
-            // this.props.events.setStage('masterChooser');
-            // this.props.events.setActivePlayers({
-            //     currentPlayer: {stage: 'masterChooser'},
-            // });
-        }
-    }
-
     onClick = id => {
         if (!this.props.isActive) {
             console.log('its not your turn');
@@ -40,49 +30,12 @@ export class DixitBoard extends React.Component {
         if (this.props.isActive) {
             if (this.isMasterPlayer(this.props.ctx, this.props.playerID)) {
                 this.props.moves.SetMasterCard(id);
-                // this.props.events.setActivePlayers({
-                //     others: 'trickChooser',
-                //     moveLimit: 1,
-                // });
             } else if (this.isTrickingPlayer(this.props.ctx, this.props.playerID)) {
-                console.log('trying to trick');
                 this.props.moves.TrickCard(id, this.props.playerID);
-                console.log('this.props.G.tricks', this.props.G.tricks);
-                console.log('Object.values(this.props.G.tricks).filter(x => x).length === this.props.ctx.numPlayers - 2', Object.values(this.props.G.tricks).filter(x => x).length === this.props.ctx.numPlayers - 2);
-                // if (Object.values(this.props.G.tricks).filter(x => x).length === this.props.ctx.numPlayers - 2) {
-                //     console.log('SETTING ACTIVE PLAYERS');
-                //     this.props.events.endStage();
-                //     // this.props.events.setActivePlayers({
-                //     //     others: 'vote',
-                //     //     moveLimit: 1,
-                //     // });
-                // }
-                // this.props.events.setActivePlayers({
-                //     others: 'vote',
-                // });
-                // if (this.shouldTrickStageEnd(this.props.G.tricks)) {
-                //     this.props.events.endStage();
-                // }
             } else if (this.isVotingPlayer(this.props.ctx, this.props.playerID)) {
                 this.props.moves.VoteOnCard(id, this.props.playerID);
-                // if (this.props.ctx.activePlayers === null) {
-                //     this.props.events.setActivePlayers({
-                //         others: 'vote',
-                //         moveLimit: 1,
-                //     });
-                // }
-                // if (this.shouldVoteStageEnd(this.props.G.votes)) {
-                //     console.log('please end stage');
-                //     this.props.events.endStage();
-                //     console.log('please end turn');
-                //     this.props.events.endTurn();
-                // }
             }
         }
-        // this.props.events.endTurn();
-        // if (this.isActive(id)) {
-        //     this.props.moves.clickCell(id);
-        // }
     };
 
     isMasterPlayer(ctx, id) {
@@ -97,28 +50,9 @@ export class DixitBoard extends React.Component {
         return ctx.activePlayers && ctx.activePlayers[id] === 'vote';
     }
 
-    // shouldTrickStageEnd(tricks) {
-    //     return Object.values(tricks)
-    //         .filter((trick, idx) => idx > 0)
-    //         .every(trick => trick !== null);
-    // }
-    //
-    // shouldVoteStageEnd(votes) {
-    //     return Object.values(votes)
-    //         .filter((vote, idx) => idx > 0)
-    //         .every(vote => vote !== null);
-    // }
-
     isVoteStage() {
-        // return false;
-        console.log(this.props.ctx);
         return this.props.ctx.activePlayers && Object.values(this.props.ctx.activePlayers)
             .every(stage => stage === 'vote');
-    }
-
-    isActive(id) {
-        if (!this.props.isActive) return false;
-        return true;
     }
 
     getCardURL(id) {
@@ -126,16 +60,15 @@ export class DixitBoard extends React.Component {
     }
 
     render() {
-        console.log(this);
-        console.log('this.props.isActive', this.props.isActive);
-        console.log('this.props.ctx.activePlayers', this.props.ctx.activePlayers);
         const name = this.props.gameMetadata.find(player => +player.id === +this.props.playerID).name;
         const playerID = +this.props.playerID;
+        const scores = JSON.stringify(this.props.G.scores);
         const cardIds = this.props.G.cards.filter((card, idx) => (idx >= playerID * CARDS_IN_HAND) && (idx < (playerID + 1) * CARDS_IN_HAND))
 
         return (
             <div>
-                <pre>{name}</pre>
+                <pre>Hi, {name}</pre>
+                <pre>Scores: {scores}</pre>
                 <pre>Turn nr: {this.props.ctx.turn}</pre>
                 {this.props.isActive && <h1>Choose a card!</h1>}
                 {this.isVoteStage() && <div>

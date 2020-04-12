@@ -7,15 +7,12 @@ function SetMasterCard(G, ctx, id) {
 }
 
 function TrickCard(G, ctx, cardId, playerId) {
-    console.log('GGGGGGG', G);
-    console.log('TrickCard G.tricks : ' , G.tricks);
     return {
         ...G,
         tricks: {
             ...G.tricks,
             [playerId]: cardId,
         },
-        // ctx.random.Shuffle
         cardsToVoteFor: ctx.random.Shuffle([
             ...G.cardsToVoteFor,
             cardId,
@@ -34,7 +31,7 @@ function VoteOnCard(G, ctx, cardId, playerId) {
 }
 
 export const Dixit = {
-    name: "dixit",
+    name: 'dixit',
 
     setup: (ctx) => {
         const tricksVotesEmptyObj = ctx.playOrder.reduce((acc, player) => {
@@ -101,14 +98,13 @@ export const Dixit = {
             return G;
         },
         onEnd: (G, ctx) => {
-            console.log('ON END TURN: ', G);
             const tricksVotesEmptyObj = ctx.playOrder.reduce((acc, player) => {
                 acc[player] = null;
                 return acc;
             }, {});
 
 
-            // deal 1 (different) new card to everyone
+            // TODO deal 1 (different) new card to everyone
             // TODO update scores
             return {
                 ...G,
@@ -120,9 +116,6 @@ export const Dixit = {
             };
         },
         endIf: (G, ctx) => {
-            console.log('Object.keys(G.votes)', Object.keys(G.votes));
-            console.log('ctx.currentPlayer', ctx.currentPlayer);
-            console.log('G.votes', G.votes);
             return Object.keys(G.votes)
                 .filter((key) => +key !== +ctx.currentPlayer)
                 .every(key => G.votes[key] !== null);
@@ -130,14 +123,11 @@ export const Dixit = {
     },
 
     onEnd: (G, ctx) => {
-        console.log('END GAME G: ', G);
-        console.log('END GAME ctx: ', ctx);
-        return G;
         // TODO calculate scores;
+        return G;
     },
 
     endIf: (G, ctx) => {
-        console.log('endIf?');
         return ctx.turn === 10;
     }
 };

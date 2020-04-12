@@ -1,4 +1,3 @@
-import { cards } from './games/dixit/cards';
 import { Server, FlatFile } from 'boardgame.io/server';
 import { TicTacToe } from './games/tictactoe/game';
 import { Dixit } from './games/dixit/game';
@@ -11,7 +10,6 @@ const server = Server({
     //     logging: true,
     // }),
 });
-console.log(cards);
 
 
 server.run(8000);

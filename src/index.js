@@ -28,7 +28,6 @@ class App extends React.Component {
     state = { playerID: null };
 
     render() {
-        console.log(this.state);
         if (this.state.playerID === null) {
             return (
                 <div>
