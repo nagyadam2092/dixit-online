@@ -10,8 +10,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './board.css';
 
-const CARDS_IN_HAND = 6;
-
 export class DixitBoard extends React.Component {
     static propTypes = {
         G: PropTypes.any.isRequired,
@@ -64,7 +62,7 @@ export class DixitBoard extends React.Component {
         const name = this.props.gameMetadata.find(player => +player.id === +this.props.playerID).name;
         const playerID = +this.props.playerID;
         const scores = JSON.stringify(this.props.G.scores);
-        const cardIds = this.props.G.cards.filter((card, idx) => (idx >= playerID * CARDS_IN_HAND) && (idx < (playerID + 1) * CARDS_IN_HAND))
+        const cardIds = this.props.G.cards.filter((card, idx) => (idx >= playerID * this.props.G.cardsInHandNr) && (idx < (playerID + 1) * this.props.G.cardsInHandNr))
 
         return (
             <div>

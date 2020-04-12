@@ -1,3 +1,50 @@
+// CONSTANTS
+const CARDS_IN_HAND_NR = 6;
+
+// UTILS
+function calculateScores(G) {
+    const voteVals = Object.values(G.votes);
+    const masterVotes = voteVals.filter(voteVal => voteVal === G.master[1]);
+    const scores = Object.keys(G.scores).reduce((acc, playerId) => {
+        if (masterVotes.length === 0 || masterVotes.length === Object.keys(G.scores).length - 1) {
+            if (+playerId === +G.master[0]) {
+                return {
+                    ...acc,
+                    [playerId]: G.scores[playerId],
+                };
+            }
+            return {
+                ...acc,
+                [playerId]: G.scores[playerId] + 2,
+            };
+        }
+        return {
+            ...acc,
+            [playerId]: G.scores[playerId] + Object.values(G.votes).filter(voterId => +voterId === +playerId).length,
+        };
+    }, {});
+    return scores;
+}
+
+function dealCards(G, ctx) {
+    let cards = [...G.cards];
+
+    // handle master card replacement
+    const masterCardId = G.master[1];
+    const masterIndex = G.cards.indexOf(masterCardId);
+    cards[masterIndex] = cards[((ctx.numPlayers * G.cardsInHandNr) + ((ctx.numPlayers * ctx.turn) + (G.master[0])))];
+
+    // handle non-master card replacement
+    Object.keys(G.tricks).forEach(playerId => {
+        const slaveCardId = G.tricks[playerId];
+        const slaveIndex = G.cards.indexOf(slaveCardId);
+        cards[slaveIndex] = cards[((ctx.numPlayers * G.cardsInHandNr) + ((ctx.numPlayers * ctx.turn) + ((+playerId))))];
+    });
+    return cards;
+}
+
+// MOVES
+
 function SetMasterCard(G, ctx, id) {
     return {
         ...G,
@@ -30,6 +77,8 @@ function VoteOnCard(G, ctx, cardId, playerId) {
     };
 }
 
+// GAME DEFINITION
+
 export const Dixit = {
     name: 'dixit',
 
@@ -50,6 +99,7 @@ export const Dixit = {
             scores: scoresEmptyObj,
             cardsToVoteFor: [],
             turn: 'masterChooser',
+            cardsInHandNr: CARDS_IN_HAND_NR,
         }
     },
 
@@ -102,31 +152,9 @@ export const Dixit = {
                 acc[player] = null;
                 return acc;
             }, {});
+            const scores = calculateScores(G);
+            const cards = dealCards(G, ctx);
 
-
-            const voteVals = Object.values(G.votes);
-            const masterVotes = voteVals.filter(voteVal => voteVal === G.master[1]);
-            const scores = Object.keys(G.scores).reduce((acc, playerId) => {
-                if (masterVotes.length === 0 || masterVotes.length === Object.keys(G.scores).length - 1) {
-                    if (+playerId === +G.master[0]) {
-                        return {
-                            ...acc,
-                            [playerId]: G.scores[playerId],
-                        };
-                    }
-                    return {
-                        ...acc,
-                        [playerId]: G.scores[playerId] + 2,
-                    };
-                }
-                return {
-                    ...acc,
-                    [playerId]: G.scores[playerId] + Object.values(G.votes).filter(voterId => +voterId === +playerId).length,
-                };
-            }, {});
-
-
-            // TODO deal 1 (different) new card to everyone
             return {
                 ...G,
                 master: [],
@@ -135,6 +163,7 @@ export const Dixit = {
                 cardsToVoteFor: [],
                 turn: 'masterChooser',
                 scores,
+                cards,
             };
         },
         endIf: (G, ctx) => {
