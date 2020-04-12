@@ -1,7 +1,7 @@
 function SetMasterCard(G, ctx, id) {
     return {
         ...G,
-        master: id,
+        master: [+ctx.currentPlayer, id],
         cardsToVoteFor: [id],
     };
 }
@@ -44,7 +44,7 @@ export const Dixit = {
         }, {});
         return {
             cards: ctx.random.Shuffle(Array.from(Array(100).keys())),
-            master: null,
+            master: [],
             tricks: tricksVotesEmptyObj,
             votes: tricksVotesEmptyObj,
             scores: scoresEmptyObj,
@@ -104,15 +104,37 @@ export const Dixit = {
             }, {});
 
 
+            const voteVals = Object.values(G.votes);
+            const masterVotes = voteVals.filter(voteVal => voteVal === G.master[1]);
+            const scores = Object.keys(G.scores).reduce((acc, playerId) => {
+                if (masterVotes.length === 0 || masterVotes.length === Object.keys(G.scores).length - 1) {
+                    if (+playerId === +G.master[0]) {
+                        return {
+                            ...acc,
+                            [playerId]: G.scores[playerId],
+                        };
+                    }
+                    return {
+                        ...acc,
+                        [playerId]: G.scores[playerId] + 2,
+                    };
+                }
+                return {
+                    ...acc,
+                    [playerId]: G.scores[playerId] + Object.values(G.votes).filter(voterId => +voterId === +playerId).length,
+                };
+            }, {});
+
+
             // TODO deal 1 (different) new card to everyone
-            // TODO update scores
             return {
                 ...G,
-                master: null,
+                master: [],
                 tricks: tricksVotesEmptyObj,
                 votes: tricksVotesEmptyObj,
                 cardsToVoteFor: [],
-                turn: 'masterChooser'
+                turn: 'masterChooser',
+                scores,
             };
         },
         endIf: (G, ctx) => {
@@ -123,7 +145,6 @@ export const Dixit = {
     },
 
     onEnd: (G, ctx) => {
-        // TODO calculate scores;
         return G;
     },
 

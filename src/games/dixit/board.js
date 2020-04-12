@@ -27,6 +27,7 @@ export class DixitBoard extends React.Component {
             console.log('its not your turn');
             return;
         }
+        // TODO check if it's own card
         if (this.props.isActive) {
             if (this.isMasterPlayer(this.props.ctx, this.props.playerID)) {
                 this.props.moves.SetMasterCard(id);
