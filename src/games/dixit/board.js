@@ -19,23 +19,34 @@ export class DixitBoard extends React.Component {
         isActive: PropTypes.bool,
         isMultiplayer: PropTypes.bool,
     };
+    state = {
+        message: '',
+    };
 
     onClick = id => {
         if (!this.props.isActive) {
-            console.log('its not your turn');
+            this.promptMessage('IT IS NOT YOUR TURN !!!');
             return;
         }
-        // TODO check if it's own card
-        if (this.props.isActive) {
-            if (this.isMasterPlayer(this.props.ctx, this.props.playerID)) {
-                this.props.moves.SetMasterCard(id);
-            } else if (this.isTrickingPlayer(this.props.ctx, this.props.playerID)) {
-                this.props.moves.TrickCard(id, this.props.playerID);
-            } else if (this.isVotingPlayer(this.props.ctx, this.props.playerID)) {
-                this.props.moves.VoteOnCard(id, this.props.playerID);
-            }
+        if (this.isMasterPlayer(this.props.ctx, this.props.playerID)) {
+            this.props.moves.SetMasterCard(id);
+        } else if (this.isTrickingPlayer(this.props.ctx, this.props.playerID)) {
+            this.props.moves.TrickCard(id, this.props.playerID);
         }
     };
+
+    vote = id => {
+        if (!this.props.isActive) {
+            this.promptMessage('IT IS NOT YOUR TURN !!!');
+            return;
+        }
+        const cardIds = this.getCardIds();
+        if (cardIds.includes(id)) {
+            this.promptMessage('CAN NOT CHOOSE YOUR OWN CARD !!!');
+            return;
+        }
+        this.props.moves.VoteOnCard(id, this.props.playerID);
+    }
 
     isMasterPlayer(ctx, id) {
         return ctx.activePlayers && ctx.activePlayers[id] === 'masterChooser';
@@ -58,21 +69,52 @@ export class DixitBoard extends React.Component {
         return `/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg`;
     }
 
-    render() {
-        const name = this.props.gameMetadata.find(player => +player.id === +this.props.playerID).name;
+    getCardIds() {
         const playerID = +this.props.playerID;
-        const scores = JSON.stringify(this.props.G.scores);
-        const cardIds = this.props.G.cards.filter((card, idx) => (idx >= playerID * this.props.G.cardsInHandNr) && (idx < (playerID + 1) * this.props.G.cardsInHandNr))
+        return this.props.G.cards.filter((card, idx) => (idx >= playerID * this.props.G.cardsInHandNr) && (idx < (playerID + 1) * this.props.G.cardsInHandNr));
+    }
+
+    getScores() {
+        return JSON.stringify(this.props.G.scores);
+    }
+
+    getCurrentPlayerName() {
+        return this.props.gameMetadata.find(player => +player.id === +this.props.playerID).name;
+    }
+
+    promptMessage(message) {
+        this.setState({
+            message,
+        });
+        setTimeout(() => {
+            this.setState({
+                message: '',
+            });
+        }, 3000)
+    }
+
+    emptyMessage() {
+        this.setState({
+            message: '',
+        });
+    }
+
+    render() {
+        const name = this.getCurrentPlayerName();
+        const scores = this.getScores();
+        const cardIds = this.getCardIds();
 
         return (
             <div>
+                {this.state.message && <div className="jqbox_overlay" onClick={this.emptyMessage.bind(this)}></div>}
+                {this.state.message && <h1 className="jqbox_innerhtml">{this.state.message}</h1>}
                 <pre>Hi, {name}</pre>
                 <pre>Scores: {scores}</pre>
                 <pre>Turn nr: {this.props.ctx.turn}</pre>
                 {this.props.isActive && <h1>Choose a card!</h1>}
                 {this.isVoteStage() && <div>
                     <h1>LET'S VOTE</h1>
-                    {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={this.getCardURL(id)} onClick={this.onClick.bind(this, id)}/>)}
+                    {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={this.getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
                     <br/>
                     <br/>
                     <br/>

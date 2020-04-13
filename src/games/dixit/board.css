@@ -47,3 +47,31 @@ td.active:hover {
 .card {
     max-width: 14vw;
 }
+
+
+.jqbox_overlay {
+    position: fixed;
+    width: 100%;
+    opacity: 0.5;
+    top: 0px;
+    margin: 0px;
+    min-height: 200px;
+    height: 100%;
+    background-color: #000;
+}
+.jqbox_innerhtml {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 200px;
+    padding: 10px;
+    background-color: #FFF;
+    border: 5px solid #CCC;
+    z-index: 200;
+    box-shadow: #000 0 2px 18px;
+}
