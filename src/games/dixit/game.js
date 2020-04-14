@@ -1,6 +1,6 @@
 // CONSTANTS
 const CARDS_IN_HAND_NR = 6;
-const CARDS_TOTAL_NR = 102;
+const CARDS_TOTAL_NR = 327;
 
 // UTILS
 function calculateScores(G) {
