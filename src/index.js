@@ -11,7 +11,7 @@ import { render } from "react-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Dixit } from "./games/dixit/game";
-import { DixitBoard } from "./games/dixit/board";
+import { DixitBoard } from "./games/dixit/components/board/board";
 import { Lobby } from 'boardgame.io/react';
 const DixitClient = Client({
     game: Dixit,

@@ -100,6 +100,7 @@ export const Dixit = {
             cardsToVoteFor: [],
             turn: 'masterChooser',
             cardsInHandNr: CARDS_IN_HAND_NR,
+            lastRound: null,
         }
     },
 
@@ -154,6 +155,9 @@ export const Dixit = {
             }, {});
             const scores = calculateScores(G);
             const cards = dealCards(G, ctx);
+            const lastRound = {
+                ...G,
+            };
 
             return {
                 ...G,
@@ -164,6 +168,7 @@ export const Dixit = {
                 turn: 'masterChooser',
                 scores,
                 cards,
+                lastRound,
             };
         },
         endIf: (G, ctx) => {

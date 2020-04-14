@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './board.css';
+import { LastRound } from "../last-round/last-round";
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -121,6 +122,7 @@ export class DixitBoard extends React.Component {
                     <br/>
                 </div>}
                 {cardIds.map(id => <img key={id} className="card" src={this.getCardURL(id)} onClick={this.onClick.bind(this, id)}/>)}
+                {this.props.G.lastRound && <LastRound lastRound={this.props.G.lastRound} players={this.props.gameMetadata}/>}
             </div>
         );
     }
