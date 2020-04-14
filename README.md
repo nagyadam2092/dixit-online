@@ -1,3 +1,13 @@
+# TODO-s
+* fix deployment
+* scoring seems buggy
+* styling
+* in-game chat
+* upload your own photos
+* show if game is over 
+  * show winner, scoring
+  * exit game button, etc..  
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
