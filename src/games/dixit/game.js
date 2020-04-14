@@ -1,5 +1,6 @@
 // CONSTANTS
 const CARDS_IN_HAND_NR = 6;
+const CARDS_TOTAL_NR = 102;
 
 // UTILS
 function calculateScores(G) {
@@ -92,7 +93,7 @@ export const Dixit = {
             return acc;
         }, {});
         return {
-            cards: ctx.random.Shuffle(Array.from(Array(100).keys())),
+            cards: ctx.random.Shuffle(Array.from(Array(CARDS_TOTAL_NR).keys())),
             master: [],
             tricks: tricksVotesEmptyObj,
             votes: tricksVotesEmptyObj,
