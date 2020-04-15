@@ -1,6 +1,6 @@
 import { Server, FlatFile } from 'boardgame.io/server';
-import { TicTacToe } from './games/tictactoe/game';
-import { Dixit } from './games/dixit/game';
+import { TicTacToe } from './src/games/tictactoe/game';
+import { Dixit } from './src/games/dixit/game';
 const path = require('path');
 const appDir = path.dirname(require.main.filename);
 const server = Server({
