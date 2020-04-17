@@ -45,7 +45,10 @@ td.active:hover {
 }
 
 .card {
-    max-width: 14vw;
+    float:  left;
+    width:  14vw;
+    height: 21vw;
+    background-size: cover;
 }
 
 

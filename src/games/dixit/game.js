@@ -1,48 +1,9 @@
+import { calculateScores, dealCards } from './utils/game.utils';
+
 // CONSTANTS
 const CARDS_IN_HAND_NR = 6;
 const CARDS_TOTAL_NR = 327;
 
-// UTILS
-function calculateScores(G) {
-    const voteVals = Object.values(G.votes);
-    const masterVotes = voteVals.filter(voteVal => voteVal === G.master[1]);
-    const scores = Object.keys(G.scores).reduce((acc, playerId) => {
-        if (masterVotes.length === 0 || masterVotes.length === Object.keys(G.scores).length - 1) {
-            if (+playerId === +G.master[0]) {
-                return {
-                    ...acc,
-                    [playerId]: G.scores[playerId],
-                };
-            }
-            return {
-                ...acc,
-                [playerId]: G.scores[playerId] + 2,
-            };
-        }
-        return {
-            ...acc,
-            [playerId]: G.scores[playerId] + Object.values(G.votes).filter(voterId => +voterId === +playerId).length,
-        };
-    }, {});
-    return scores;
-}
-
-function dealCards(G, ctx) {
-    let cards = [...G.cards];
-
-    // handle master card replacement
-    const masterCardId = G.master[1];
-    const masterIndex = G.cards.indexOf(masterCardId);
-    cards[masterIndex] = cards[((ctx.numPlayers * G.cardsInHandNr) + ((ctx.numPlayers * ctx.turn) + (G.master[0])))];
-
-    // handle non-master card replacement
-    Object.keys(G.tricks).forEach(playerId => {
-        const slaveCardId = G.tricks[playerId];
-        const slaveIndex = G.cards.indexOf(slaveCardId);
-        cards[slaveIndex] = cards[((ctx.numPlayers * G.cardsInHandNr) + ((ctx.numPlayers * ctx.turn) + ((+playerId))))];
-    });
-    return cards;
-}
 
 // MOVES
 
@@ -102,6 +63,7 @@ export const Dixit = {
             turn: 'masterChooser',
             cardsInHandNr: CARDS_IN_HAND_NR,
             previousRound: null,
+            gameOver: false,
         }
     },
 
@@ -180,7 +142,10 @@ export const Dixit = {
     },
 
     onEnd: (G, ctx) => {
-        return G;
+        return {
+            ...G,
+            gameOver: true,
+        };
     },
 
     endIf: (G, ctx) => {

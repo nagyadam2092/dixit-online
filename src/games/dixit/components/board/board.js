@@ -10,6 +10,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './board.css';
 import { PreviousRound } from "../previous-round/previous-round";
+import { getCardIds } from '../../utils/game.utils'
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -41,7 +42,7 @@ export class DixitBoard extends React.Component {
             this.promptMessage('IT IS NOT YOUR TURN !!!');
             return;
         }
-        const cardIds = this.getCardIds();
+        const cardIds = getCardIds(this.props.G.cards, +this.props.playerID, this.props.G.cardsInHandNr);
         if (cardIds.includes(id)) {
             this.promptMessage('CAN NOT CHOOSE YOUR OWN CARD !!!');
             return;
@@ -68,11 +69,6 @@ export class DixitBoard extends React.Component {
 
     getCardURL(id) {
         return `/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg`;
-    }
-
-    getCardIds() {
-        const playerID = +this.props.playerID;
-        return this.props.G.cards.filter((card, idx) => (idx >= playerID * this.props.G.cardsInHandNr) && (idx < (playerID + 1) * this.props.G.cardsInHandNr));
     }
 
     getScores() {
@@ -103,7 +99,7 @@ export class DixitBoard extends React.Component {
     render() {
         const name = this.getCurrentPlayerName();
         const scores = this.getScores();
-        const cardIds = this.getCardIds();
+        const cardIds = getCardIds(this.props.G.cards, +this.props.playerID, this.props.G.cardsInHandNr);
 
         return (
             <div>
@@ -121,7 +117,8 @@ export class DixitBoard extends React.Component {
                     <br/>
                     <br/>
                 </div>}
-                {cardIds.map(id => <img key={id} className="card" src={this.getCardURL(id)} onClick={this.onClick.bind(this, id)}/>)}
+                {/*THIS!! https://codepen.io/nagyadam2092/pen/RwWrbmz*/}
+                {cardIds.map(id => <div key={id} className="card" style={{backgroundImage: `url(${this.getCardURL(id)})`}} onClick={this.onClick.bind(this, id)}></div>)}
                 {this.props.G.previousRound && <PreviousRound previousRound={this.props.G.previousRound} players={this.props.gameMetadata}/>}
             </div>
         );
