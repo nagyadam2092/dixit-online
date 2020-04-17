@@ -1,4 +1,3 @@
-// UTILS
 export function calculateScores(G) {
     const voteVals = Object.values(G.votes);
     const masterVotes = voteVals.filter(voteVal => voteVal === G.master[1]);
@@ -16,9 +15,9 @@ export function calculateScores(G) {
                 [playerId]: G.scores[playerId] + 2,
             };
         }
-        const votesOnHer = Object.keys(G.votes).reduce((acc, pId) => {
-            const herCards = getCardIds(G.cards, +pId, G.cardsInHandNr);
-            if (herCards.includes(G.votes[pId])) {
+        const herCards = getCardIds(G.cards, +playerId, G.cardsInHandNr);
+        const votesOnHer = Object.values(G.votes).reduce((acc, cardId) => {
+            if (herCards.includes(cardId)) {
                 return acc + 1;
             }
             return acc;

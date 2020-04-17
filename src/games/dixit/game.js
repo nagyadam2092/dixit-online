@@ -1,9 +1,5 @@
 import { calculateScores, dealCards } from './utils/game.utils';
-
-// CONSTANTS
-const CARDS_IN_HAND_NR = 6;
-const CARDS_TOTAL_NR = 327;
-
+import { CARDS_IN_HAND_NR, CARDS_TOTAL_NR } from './utils/game.constants';
 
 // MOVES
 

@@ -1,4 +1,5 @@
-import { calculateScores, dealCards } from './game.utils';
+import { calculateScores } from './game.utils';
+import { CARDS_IN_HAND_NR } from './game.constants';
 
 // players: 0,1,2,3
 // prev scores: 0{5}, 1{6}, 2{7}, 3{8}
@@ -29,6 +30,7 @@ it('should return good scores', () => {
             12,111,112,113,114,115,
             13,116,117,118,119,120,
         ],
+        cardsInHandNr: CARDS_IN_HAND_NR,
     };
     const expected = {
         '0': 6,
