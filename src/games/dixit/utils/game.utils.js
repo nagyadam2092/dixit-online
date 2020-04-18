@@ -58,3 +58,7 @@ export function getCardIds(cards, playerID, cardsInHandNr) {
 export function getCardURL(id) {
     return `/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg`;
 }
+
+export function getBackCardURL() {
+    return `/assets/img/cards/card_back.jpg`;
+}

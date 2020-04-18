@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Cards } from '../cards/cards';
 import './board.scss';
 import { PreviousRound } from "../previous-round/previous-round";
-import { getCardIds, getCardURL } from '../../utils/game.utils';
+import { getCardIds, getCardURL, getBackCardURL } from '../../utils/game.utils';
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -68,12 +68,34 @@ export class DixitBoard extends React.Component {
             .every(stage => stage === 'vote');
     }
 
+    isTrickStage() {
+        return this.props.ctx.activePlayers && Object.values(this.props.ctx.activePlayers)
+            .every(stage => stage === 'trickChooser');
+    }
+
     getScores() {
-        return JSON.stringify(this.props.G.scores);
+        return (<div className="scores">Scoring: <br/><pre>{JSON.stringify(this.getScoresWithNames(), null, 2) }</pre></div>);
+    }
+
+    getScoresWithNames() {
+        // return '';
+        const enrichedScores = {};
+        for (let id in this.props.G.scores) {
+            enrichedScores[this.getPlayerNameByID(id)] = this.props.G.scores[id];
+        }
+        return enrichedScores;
     }
 
     getCurrentPlayerName() {
-        return this.props.gameMetadata.find(player => +player.id === +this.props.playerID).name;
+        return this.getPlayerNameByID(+this.props.playerID).name;
+    }
+
+    getPlayerNameByID(id) {
+        return this.props.gameMetadata.find(player => +player.id === +id).name;
+    }
+
+    getWaitingForNames() {
+        return Object.keys(this.props.ctx.activePlayers).map(id => this.getPlayerNameByID(id)).join(',');
     }
 
     promptMessage(message) {
@@ -93,18 +115,25 @@ export class DixitBoard extends React.Component {
         });
     }
 
+    getPutDownCardsNr() {
+        return this.props.gameMetadata.length - Object.keys(this.props.ctx.activePlayers).length;
+    }
+
     render() {
         const name = this.getCurrentPlayerName();
         const scores = this.getScores();
+        console.log('this.props.ctx.activePlayers', this.props.ctx.activePlayers);
+        console.log('this.props.G', this.props.G);
 
         return (
             <div>
                 {this.state.message && <div className="jqbox_overlay" onClick={this.emptyMessage.bind(this)}></div>}
                 {this.state.message && <h1 className="jqbox_innerhtml">{this.state.message}</h1>}
                 <pre>Hi, {name}</pre>
-                <pre>Scores: {scores}</pre>
+                <pre>Scores: {this.getScores()}</pre>
                 <pre>Turn nr: {this.props.ctx.turn}</pre>
                 {this.props.isActive && <h1>Choose a card!</h1>}
+                {this.isTrickStage() && new Array(this.getPutDownCardsNr()).fill(<img src={getBackCardURL()} className="card_back"/>)}
                 {this.isVoteStage() && <div>
                     <h1>LET'S VOTE</h1>
                     {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
@@ -113,6 +142,7 @@ export class DixitBoard extends React.Component {
                     <br/>
                     <br/>
                 </div>}
+                {<div>Waiting for: {this.getWaitingForNames()}</div>}
                 <Cards cards={this.props.G.cards} playerID={+this.props.playerID} cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
                 {this.props.G.previousRound && <PreviousRound previousRound={this.props.G.previousRound} players={this.props.gameMetadata}/>}
             </div>

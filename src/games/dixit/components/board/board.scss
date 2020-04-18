@@ -51,6 +51,15 @@ td.active:hover {
 //    background-size: cover;
 //}
 
+.card_back {
+    width: 15vw;
+}
+
+.scores {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
 .jqbox_overlay {
     position: fixed;
