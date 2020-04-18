@@ -16,11 +16,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "node -r esm server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "client": "react-scripts start"
+    "start": "node -r esm server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
