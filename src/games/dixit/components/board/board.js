@@ -8,9 +8,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './board.css';
+import { Cards } from '../cards/cards';
+import './board.scss';
 import { PreviousRound } from "../previous-round/previous-round";
-import { getCardIds } from '../../utils/game.utils'
+import { getCardIds, getCardURL } from '../../utils/game.utils';
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -67,10 +68,6 @@ export class DixitBoard extends React.Component {
             .every(stage => stage === 'vote');
     }
 
-    getCardURL(id) {
-        return `/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg`;
-    }
-
     getScores() {
         return JSON.stringify(this.props.G.scores);
     }
@@ -99,7 +96,6 @@ export class DixitBoard extends React.Component {
     render() {
         const name = this.getCurrentPlayerName();
         const scores = this.getScores();
-        const cardIds = getCardIds(this.props.G.cards, +this.props.playerID, this.props.G.cardsInHandNr);
 
         return (
             <div>
@@ -111,14 +107,13 @@ export class DixitBoard extends React.Component {
                 {this.props.isActive && <h1>Choose a card!</h1>}
                 {this.isVoteStage() && <div>
                     <h1>LET'S VOTE</h1>
-                    {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={this.getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
+                    {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
                     <br/>
                     <br/>
                     <br/>
                     <br/>
                 </div>}
-                {/*THIS!! https://codepen.io/nagyadam2092/pen/RwWrbmz*/}
-                {cardIds.map(id => <div key={id} className="card" style={{backgroundImage: `url(${this.getCardURL(id)})`}} onClick={this.onClick.bind(this, id)}></div>)}
+                <Cards cards={this.props.G.cards} playerID={+this.props.playerID} cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
                 {this.props.G.previousRound && <PreviousRound previousRound={this.props.G.previousRound} players={this.props.gameMetadata}/>}
             </div>
         );

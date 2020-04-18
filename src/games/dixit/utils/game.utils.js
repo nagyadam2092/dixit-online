@@ -54,3 +54,7 @@ export function dealCards(G, ctx) {
 export function getCardIds(cards, playerID, cardsInHandNr) {
     return cards.filter((card, idx) => (idx >= playerID * cardsInHandNr) && (idx < (playerID + 1) * cardsInHandNr));
 }
+
+export function getCardURL(id) {
+    return `/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg`;
+}

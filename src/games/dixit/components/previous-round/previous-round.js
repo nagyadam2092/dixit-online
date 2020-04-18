@@ -8,7 +8,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './previous-round.css';
+import './previous-round.scss';
 
 export class PreviousRound extends React.Component {
     static propTypes = {
