@@ -2,7 +2,7 @@
   "name": "dixit-client",
   "version": "0.1.0",
   "private": true,
-  "main": "server.js",
+  "main": "node -r esm server",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -16,7 +16,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "node -r esm server.js",
+    "start": "node -r esm server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
