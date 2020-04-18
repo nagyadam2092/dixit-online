@@ -13,4 +13,3 @@ const server = Server({
 
 
 server.run(8000);
-console.log('PLS HEROKU PLSSSSS');
