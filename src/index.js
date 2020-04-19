@@ -24,6 +24,7 @@ const importedGames = [{
     board: DixitBoard,
 }];
 
+const server = `https://${window.location.hostname}`;
 const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
 
 class App extends React.Component {
@@ -34,8 +35,8 @@ class App extends React.Component {
             return (
                 <div>
                     <Lobby
-                        gameServer={`${protocol}//${window.location.hostname}:8000`}
-                        lobbyServer={`${protocol}//${window.location.hostname}:8000`}
+                        gameServer={server}
+                        lobbyServer={server}
                         gameComponents={importedGames}
                     />
                 </div>
