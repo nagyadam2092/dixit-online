@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^7.2.1",
     "boardgame.io": "^0.39.4",
     "esm": "^3.2.25",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
     "node-persist": "^3.0.5",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
