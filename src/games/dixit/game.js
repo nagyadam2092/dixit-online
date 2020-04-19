@@ -35,6 +35,10 @@ function VoteOnCard(G, ctx, cardId, playerId) {
     };
 }
 
+function AcknowledgeTurn(G) {
+    return G;
+}
+
 // GAME DEFINITION
 
 export const Dixit = {
@@ -91,11 +95,19 @@ export const Dixit = {
                     VoteOnCard,
                 },
                 moveLimit: 1,
+                next: 'acknowledge',
             },
+            acknowledge: {
+                moves: {
+                    AcknowledgeTurn,
+                },
+                moveLimit: 1,
+            }
         },
         onMove: (G, ctx) => {
             if (ctx.activePlayers === null) {
-                const newTurn = G.turn === 'masterChooser' ? 'trickChooser' : G.turn === 'trickChooser' ? 'vote' : null;
+                const newTurn = G.turn === 'masterChooser' ? 'trickChooser' : G.turn === 'trickChooser' ? 'vote' : G.turn === 'vote' ? 'acknowledge' : null;
+                console.log('newTurn', newTurn);
                 ctx.events.setActivePlayers({
                     others: newTurn,
                     moveLimit: 1,

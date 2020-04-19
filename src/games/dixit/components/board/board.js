@@ -51,6 +51,10 @@ export class DixitBoard extends React.Component {
         this.props.moves.VoteOnCard(id, this.props.playerID);
     }
 
+    acknowledgeTurn() {
+        this.props.moves.AcknowledgeTurn();
+    }
+
     isMasterPlayer(ctx, id) {
         return ctx.activePlayers && ctx.activePlayers[id] === 'masterChooser';
     }
@@ -71,6 +75,11 @@ export class DixitBoard extends React.Component {
     isTrickStage() {
         return this.props.ctx.activePlayers && Object.values(this.props.ctx.activePlayers)
             .every(stage => stage === 'trickChooser');
+    }
+
+    isAcknowledgeStage() {
+        return this.props.ctx.activePlayers && Object.values(this.props.ctx.activePlayers)
+            .every(stage => stage === 'acknowledge');
     }
 
     getScores() {
@@ -121,26 +130,21 @@ export class DixitBoard extends React.Component {
 
     render() {
         const name = this.getCurrentPlayerName();
-        const scores = this.getScores();
-        console.log('this.props.ctx.activePlayers', this.props.ctx.activePlayers);
-        console.log('this.props.G', this.props.G);
+        console.log(this.props.G);
 
         return (
             <div>
                 {this.state.message && <div className="jqbox_overlay" onClick={this.emptyMessage.bind(this)}></div>}
                 {this.state.message && <h1 className="jqbox_innerhtml">{this.state.message}</h1>}
                 <pre>Hi, {name}</pre>
-                <pre>Scores: {this.getScores()}</pre>
+                <pre className="scores">Scores: {this.getScores()}</pre>
                 <pre>Turn nr: {this.props.ctx.turn}</pre>
                 {this.props.isActive && <h1>Choose a card!</h1>}
+                {this.isAcknowledgeStage() && <button onClick={this.acknowledgeTurn.bind(this)}>GET ME TO THE NEXT ROUND</button>}
                 {this.isTrickStage() && new Array(this.getPutDownCardsNr()).fill(<img src={getBackCardURL()} className="card_back"/>)}
                 {this.isVoteStage() && <div>
                     <h1>LET'S VOTE</h1>
                     {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
                 </div>}
                 {<div>Waiting for: {this.getWaitingForNames()}</div>}
                 <Cards cards={this.props.G.cards} playerID={+this.props.playerID} cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
