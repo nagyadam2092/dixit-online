@@ -96,7 +96,7 @@ export class DixitBoard extends React.Component {
     }
 
     getCurrentPlayerName() {
-        return this.getPlayerNameByID(+this.props.playerID).name;
+        return this.getPlayerNameByID(this.props.playerID);
     }
 
     getPlayerNameByID(id) {
@@ -139,14 +139,14 @@ export class DixitBoard extends React.Component {
                 <pre>Hi, {name}</pre>
                 <pre className="scores">Scores: {this.getScores()}</pre>
                 <pre>Turn nr: {this.props.ctx.turn}</pre>
-                {this.props.isActive && <h1>Choose a card!</h1>}
-                {this.isAcknowledgeStage() && <button onClick={this.acknowledgeTurn.bind(this)}>GET ME TO THE NEXT ROUND</button>}
+                {this.props.isActive && <h1>It's your turn!</h1>}
+                {this.props.isActive && this.isAcknowledgeStage() && <button onClick={this.acknowledgeTurn.bind(this)}>GET ME TO THE NEXT ROUND</button>}
                 {this.isTrickStage() && new Array(this.getPutDownCardsNr()).fill(<img src={getBackCardURL()} className="card_back"/>)}
                 {this.isVoteStage() && <div>
                     <h1>LET'S VOTE</h1>
                     {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
                 </div>}
-                {<div>Waiting for: {this.getWaitingForNames()}</div>}
+                {<div>Waiting for other players... ({this.getWaitingForNames()})</div>}
                 <Cards cards={this.props.G.cards} playerID={+this.props.playerID} cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
                 {this.props.G.previousRound && <PreviousRound previousRound={this.props.G.previousRound} players={this.props.gameMetadata}/>}
             </div>
