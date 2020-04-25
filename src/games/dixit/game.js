@@ -44,6 +44,8 @@ function AcknowledgeTurn(G) {
 
 export const Dixit = {
     name: 'dixit',
+    minPlayers: 3,
+    maxPlayers: 20,
 
     setup: (ctx) => {
         const tricksVotesEmptyObj = ctx.playOrder.reduce((acc, player) => {
