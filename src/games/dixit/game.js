@@ -1,5 +1,5 @@
 import { calculateScores, dealCards } from './utils/game.utils';
-import { CARDS_IN_HAND_NR, CARDS_TOTAL_NR } from './utils/game.constants';
+import { CARDS_IN_HAND_NR, CARDS_TOTAL_NR, TURN_NR } from './utils/game.constants';
 
 // MOVES
 
@@ -36,6 +36,7 @@ function VoteOnCard(G, ctx, cardId, playerId) {
 }
 
 function AcknowledgeTurn(G) {
+    console.log('Acknowledging turn', G);
     return G;
 }
 
@@ -108,10 +109,17 @@ export const Dixit = {
             if (ctx.activePlayers === null) {
                 const newTurn = G.turn === 'masterChooser' ? 'trickChooser' : G.turn === 'trickChooser' ? 'vote' : G.turn === 'vote' ? 'acknowledge' : null;
                 console.log('newTurn', newTurn);
-                ctx.events.setActivePlayers({
-                    others: newTurn,
-                    moveLimit: 1,
-                });
+                if (G.turn === 'vote') {
+                    ctx.events.setActivePlayers({
+                        all: newTurn,
+                        moveLimit: 1,
+                    });
+                } else if (G.turn !== 'acknowledge') {
+                    ctx.events.setActivePlayers({
+                        others: newTurn,
+                        moveLimit: 1,
+                    });
+                }
                 return {
                     ...G,
                     turn: newTurn,
@@ -143,9 +151,7 @@ export const Dixit = {
             };
         },
         endIf: (G, ctx) => {
-            return Object.keys(G.votes)
-                .filter((key) => +key !== +ctx.currentPlayer)
-                .every(key => G.votes[key] !== null);
+            return (ctx.activePlayers === null && G.turn === null) || (ctx.activePlayers && Object.values(ctx.activePlayers).every(turn => turn === null) && G.turn === null);
         }
     },
 
@@ -157,6 +163,6 @@ export const Dixit = {
     },
 
     endIf: (G, ctx) => {
-        return ctx.turn === 10;
+        return ctx.turn === TURN_NR;
     }
 };

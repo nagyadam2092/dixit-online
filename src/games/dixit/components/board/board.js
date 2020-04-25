@@ -104,7 +104,7 @@ export class DixitBoard extends React.Component {
     }
 
     getWaitingForNames() {
-        return Object.keys(this.props.ctx.activePlayers).map(id => this.getPlayerNameByID(id)).join(',');
+        return this.props.ctx.activePlayers && Object.keys(this.props.ctx.activePlayers).map(id => this.getPlayerNameByID(id)).join(',');
     }
 
     promptMessage(message) {

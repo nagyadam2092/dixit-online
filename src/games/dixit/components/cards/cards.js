@@ -21,7 +21,7 @@ export class Cards extends React.Component {
         return (
             <div className="cards">
                 {cardIds.map(id => (
-                    <div className="card" onClick={this.onClick.bind(this, id)}>
+                    <div className="card" onClick={this.onClick.bind(this, id)} key={id}>
                         <div className="card-face" style={{backgroundImage: `url(${getCardURL(id)})`}}>
                             <div className="card-label">
                                 {/*{id}*/}
