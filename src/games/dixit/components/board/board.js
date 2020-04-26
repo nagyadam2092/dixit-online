@@ -10,10 +10,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Cards } from '../cards/cards';
 import './board.scss';
-import { PreviousRound } from "../previous-round/previous-round";
+import { PreviousRound } from '../previous-round/previous-round';
 import { getCardIds } from '../../utils/game.utils';
-import { TopMenu } from "../top-menu/top-menu";
-import { Table } from "../table/table";
+import { TopMenu } from '../top-menu/top-menu';
+import { Table } from '../table/table';
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -142,15 +142,15 @@ export class DixitBoard extends React.Component {
         console.log(this.props.G);
 
         return (
-            <div className="game-container">
+            <div className='game-container'>
                 <TopMenu playerName={name} isActive={this.props.isActive} currentTurn={this.currentTurn()}
                          waitingForNames={this.getWaitingForNames()}/>
-                {this.state.message && <div className="jqbox_overlay" onClick={this.emptyMessage.bind(this)}></div>}
-                {this.state.message && <h1 className="jqbox_innerhtml">{this.state.message}</h1>}
-                <pre className="scores">Scores: {this.getScores()}
+                {this.state.message && <div className='jqbox_overlay' onClick={this.emptyMessage.bind(this)}></div>}
+                {this.state.message && <h1 className='jqbox_innerhtml'>{this.state.message}</h1>}
+                <pre className='scores'>Scores: {this.getScores()}
                     Turn nr: {this.props.ctx.turn}
                 </pre>
-                <div className="game-table">
+                <div className='game-table'>
                     <Table isTrickStage={this.isTrickStage()} faceDownCardNr={this.getPutDownCardsNr()}
                            isVoteStage={this.isVoteStage()} cardsToVoteFor={this.props.G.cardsToVoteFor}
                            vote={this.vote} isActive={isActive} acknowledgeTurn={this.acknowledgeTurn.bind(this)}

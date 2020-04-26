@@ -31,11 +31,11 @@ export class PreviousRound extends React.Component {
             <div>
                 <h2>PREVIOUS ROUND</h2>
                 <div><pre>Master ({this.getPlayerNameById(this.props.previousRound.master[0])}):</pre></div>
-                <img src={this.getCardURL(this.props.previousRound.master[1])} alt="nope"/>
+                <img src={this.getCardURL(this.props.previousRound.master[1])} alt='nope'/>
                 <div><h3>Cards given:</h3></div>
-                {Object.keys(this.props.previousRound.tricks).filter(x => x && this.props.previousRound.tricks[x]).map(trickPlayerId => <pre><div>Card ({this.getPlayerNameById(trickPlayerId)})</div><img src={this.getCardURL(this.props.previousRound.tricks[trickPlayerId])} alt="nope"/></pre>)}
+                {Object.keys(this.props.previousRound.tricks).filter(x => x && this.props.previousRound.tricks[x]).map(trickPlayerId => <pre><div>Card ({this.getPlayerNameById(trickPlayerId)})</div><img src={this.getCardURL(this.props.previousRound.tricks[trickPlayerId])} alt='nope'/></pre>)}
                 <div><h3>Votes:</h3></div>
-                {Object.keys(this.props.previousRound.votes).filter(x => x && this.props.previousRound.votes[x]).map(votePlayerId => <pre><div>Card ({this.getPlayerNameById(votePlayerId)}: )</div><img src={this.getCardURL(this.props.previousRound.votes[votePlayerId])} alt="nope"/></pre>)}
+                {Object.keys(this.props.previousRound.votes).filter(x => x && this.props.previousRound.votes[x]).map(votePlayerId => <pre><div>Card ({this.getPlayerNameById(votePlayerId)}: )</div><img src={this.getCardURL(this.props.previousRound.votes[votePlayerId])} alt='nope'/></pre>)}
             </div>
         );
     }

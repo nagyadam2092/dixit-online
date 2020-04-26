@@ -19,18 +19,18 @@ export class Cards extends React.Component {
         const cardIds = getCardIds(this.props.cards, +this.props.playerID, this.props.cardsInHandNr);
 
         return (
-            <div className="cards">
+            <div className='cards'>
                 {cardIds.map(id => (
-                    <div className="card" onClick={this.onClick.bind(this, id)} key={id}>
-                        <div className="card-face" style={{backgroundImage: `url(${getCardURL(id)})`}}>
-                            <div className="card-label">
+                    <div className='card' onClick={this.onClick.bind(this, id)} key={id}>
+                        <div className='card-face' style={{backgroundImage: `url(${getCardURL(id)})`}}>
+                            <div className='card-label'>
                                 {/*{id}*/}
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-            // cardIds.map(id => <div key={id} className="card" style={{backgroundImage: `url(${getCardURL(id)})`}} onClick={this.onClick.bind(this, id)}></div>)
+            // cardIds.map(id => <div key={id} className='card' style={{backgroundImage: `url(${getCardURL(id)})`}} onClick={this.onClick.bind(this, id)}></div>)
         );
     }
 }
