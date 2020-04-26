@@ -156,8 +156,8 @@ export class DixitBoard extends React.Component {
                            vote={this.vote} isActive={isActive} acknowledgeTurn={this.acknowledgeTurn.bind(this)}
                            isAcknowledgeStage={this.isAcknowledgeStage()} master={this.props.G.master}
                            cards={this.props.G.cards} players={this.props.gameMetadata} votes={this.props.G.votes}/>
-                    <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
-                           cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
+                    {!this.isVoteStage() && !this.isAcknowledgeStage() && <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
+                           cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>}
                 </div>
             </div>
         );
