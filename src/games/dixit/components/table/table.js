@@ -25,6 +25,7 @@ export class Table extends React.Component {
         master: PropTypes.array.isRequired,
         cards: PropTypes.array.isRequired,
         players: PropTypes.any.isRequired,
+        votes: PropTypes.any.isRequired,
     };
 
     vote = id => {
@@ -39,6 +40,20 @@ export class Table extends React.Component {
         return new Array(faceDownCardNr).fill(<img src={getBackCardURL()} className="table-card"/>);
     }
 
+    getPlayerNameByID(id) {
+        return this.props.players.find(player => +player.id === +id).name;
+    }
+
+    getVotedOnCardNamesById(cardId) {
+        const voters = [];
+        for (let [key, value] of Object.entries(this.props.votes)) {
+            if (value === cardId) {
+                voters.push(this.getPlayerNameByID(key))
+            }
+        }
+        return voters.map((voter, idx) => <span>{voter}{idx !== voters.length && <br />}</span>)
+    }
+
     getPlayerNameByCardId(cardId) {
         const { cards, players } = this.props;
         const cardIndex = cards.indexOf(cardId);
@@ -50,6 +65,7 @@ export class Table extends React.Component {
         return cardsToVoteFor.map(id =>
             <div className={"table-card " + (revealMaster && id === masterId ? "master" : "")}>
                 <img key={id} src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>
+                {revealMaster && <div className="players-voted-on-card">{this.getVotedOnCardNamesById(id)}</div>}
                 {revealMaster && <pre className="card-owner">{this.getPlayerNameByCardId(id)}</pre>}
             </div>);
     }

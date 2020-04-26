@@ -5,7 +5,7 @@
 
   .acknowledge-button {
     margin: 10px auto;
-    display:block;
+    display: block;
   }
 
   .cards-container {
@@ -15,21 +15,36 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 30px;
 
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
     .table-card {
       position: relative;
-        img {
-          width: 100%;
-          border-radius: 10px;
-        }
 
       .card-owner {
         color: white;
         text-align: center;
       }
+
+      .players-voted-on-card {
+        position: absolute;
+        color: white;
+        left: 100px;
+        top: 100px;
+        background-color: rgba(0, 0, 0, 0.65);
+        font-size: $font-size;
+        border-radius: 5px;
+        padding: 5px;
+        //-webkit-text-stroke: 2px black;
+        //-webkit-text-fill-color: white;
+      }
     }
 
     .master {
-      border: 5px solid red;
+      border: 5px solid $cyan;
+      border-radius: 10px;
     }
   }
 }
