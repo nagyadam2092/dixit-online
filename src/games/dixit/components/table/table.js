@@ -8,7 +8,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getBackCardURL, getCardURL } from '../../utils/game.utils';
+import { getBackCardURL, getCardURL, calculateScoreByPlayerId, getKeyByValue } from '../../utils/game.utils';
 import { CARDS_IN_HAND_NR } from '../../utils/game.constants';
 import './table.scss';
 
@@ -26,6 +26,8 @@ export class Table extends React.Component {
         cards: PropTypes.array.isRequired,
         players: PropTypes.any.isRequired,
         votes: PropTypes.any.isRequired,
+        playerID: PropTypes.any.isRequired,
+        G: PropTypes.any.isRequired,
     };
 
     vote = id => {
@@ -68,6 +70,7 @@ export class Table extends React.Component {
                 {revealMaster && id === masterId && <div className='overlay'></div>}
                 {revealMaster && <div className='players-voted-on-card'>{this.getVotedOnCardNamesById(id)}</div>}
                 {revealMaster && <pre className='card-owner'>{this.getPlayerNameByCardId(id)}</pre>}
+                {revealMaster && <pre className='card-owner'>{calculateScoreByPlayerId(this.props.G, getKeyByValue(this.props.G.votes, id))}</pre>}
             </div>);
     }
 
@@ -80,6 +83,7 @@ export class Table extends React.Component {
                     {isTrickStage && this.getFaceDownCards(faceDownCardNr)}
                     {(isVoteStage || isAcknowledgeStage) && this.revealCards(cardsToVoteFor, isAcknowledgeStage, master[1])}
                 </div>
+                {isAcknowledgeStage && <pre>YOU GET: {calculateScoreByPlayerId(this.props.G, +this.props.playerID)}</pre>}
             </div>
         );
     }

@@ -137,7 +137,7 @@ export class DixitBoard extends React.Component {
     }
 
     render() {
-        const {isActive} = this.props;
+        const {isActive, playerID} = this.props;
         const name = this.getCurrentPlayerName();
         console.log(this.props.G);
 
@@ -155,7 +155,7 @@ export class DixitBoard extends React.Component {
                            isVoteStage={this.isVoteStage()} cardsToVoteFor={this.props.G.cardsToVoteFor}
                            vote={this.vote} isActive={isActive} acknowledgeTurn={this.acknowledgeTurn.bind(this)}
                            isAcknowledgeStage={this.isAcknowledgeStage()} master={this.props.G.master}
-                           cards={this.props.G.cards} players={this.props.gameMetadata} votes={this.props.G.votes}/>
+                           cards={this.props.G.cards} players={this.props.gameMetadata} votes={this.props.G.votes} playerID={playerID} G={this.props.G}/>
                     {!this.isVoteStage() && !this.isAcknowledgeStage() && <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
                            cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>}
                 </div>

@@ -56,8 +56,7 @@ html, body {
 }
 
 .game-container {
-    background-color: $blue;
-    height: 100vh;
+    //height: 100vh;
     .game-table {
         padding-top: $top-menu-height;
     }
@@ -112,4 +111,5 @@ html, body {
 
 body {
     margin: 0;
+    background-color: $blue;
 }

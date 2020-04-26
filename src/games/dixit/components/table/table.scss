@@ -36,17 +36,17 @@
       }
 
       .players-voted-on-card {
+        //display:flex;
+        //justify-content:center;
+        //align-items:center;
         position: absolute;
         color: white;
         left: 30px;
         top: 100px;
-        //background-color: rgba(0, 0, 0, 0.65);
         font-size: 1.5 * $font-size;
         border-radius: 5px;
         padding: 5px;
         z-index: 11;
-        //-webkit-text-stroke: 1px black;
-        //-webkit-text-fill-color: white;
       }
     }
 
