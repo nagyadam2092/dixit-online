@@ -1,7 +1,7 @@
 @import "src/games/dixit/sass/variables";
 
-$spacing-between-items: 23px;
-$top-menu-item-height: 77px;
+$spacing-between-items: 12px;
+$top-menu-item-height: 39px;
 
 .top-menu-container {
   position: fixed;
@@ -12,14 +12,14 @@ $top-menu-item-height: 77px;
 
   .top-menu-item {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     text-align: center;
     height: $top-menu-item-height;
     line-height: $top-menu-item-height;
     vertical-align: middle;
     margin-left: 20px;
     margin-right: 20px;
-    margin-bottom: $spacing-between-items;
+    margin-top: $spacing-between-items;
     font-weight: bold;
   }
 
