@@ -65,6 +65,7 @@ export class Table extends React.Component {
         return cardsToVoteFor.map(id =>
             <div className={'table-card ' + (revealMaster && id === masterId ? 'master' : '')}>
                 <img key={id} src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>
+                {revealMaster && id === masterId && <div className='overlay'></div>}
                 {revealMaster && <div className='players-voted-on-card'>{this.getVotedOnCardNamesById(id)}</div>}
                 {revealMaster && <pre className='card-owner'>{this.getPlayerNameByCardId(id)}</pre>}
             </div>);
