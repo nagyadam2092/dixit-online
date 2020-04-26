@@ -1,0 +1,28 @@
+@import "src/games/dixit/sass/variables";
+
+.table-container {
+  width: 100%;
+
+  .acknowledge-button {
+    margin: 10px auto;
+    display:block;
+  }
+
+  .cards-container {
+    padding-left: 50px;
+    padding-right: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 30px;
+
+    .table-card {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .master {
+      border: 5px solid red;
+    }
+  }
+}

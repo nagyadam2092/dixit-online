@@ -40,18 +40,27 @@ td.active:hover {
 
 
 // reset styles
+
+@import "src/games/dixit/sass/variables";
 #lobby-view {
     padding: 0 !important;
 }
 html, body {
-    //height: none;
+    position: relative;
 }
 
 /* custom */
-@import "src/games/dixit/sass/variables";
 
 .hidden {
     display: none;
+}
+
+.game-container {
+    background-color: $blue;
+    height: 100vh;
+    .game-table {
+        padding-top: $top-menu-height;
+    }
 }
 
 //.card {
@@ -69,6 +78,9 @@ html, body {
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
 }
 
 .jqbox_overlay {
@@ -96,4 +108,8 @@ html, body {
     border: 5px solid #CCC;
     z-index: 200;
     box-shadow: #000 0 2px 18px;
+}
+
+body {
+    margin: 0;
 }
