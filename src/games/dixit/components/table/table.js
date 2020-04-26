@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getBackCardURL, getCardURL } from "../../utils/game.utils";
+import { CARDS_IN_HAND_NR } from "../../utils/game.constants";
 import "./table.scss";
 
 export class Table extends React.Component {
@@ -22,6 +23,8 @@ export class Table extends React.Component {
         acknowledgeTurn: PropTypes.func.isRequired,
         isAcknowledgeStage: PropTypes.bool.isRequired,
         master: PropTypes.array.isRequired,
+        cards: PropTypes.array.isRequired,
+        players: PropTypes.any.isRequired,
     };
 
     vote = id => {
@@ -36,9 +39,19 @@ export class Table extends React.Component {
         return new Array(faceDownCardNr).fill(<img src={getBackCardURL()} className="table-card"/>);
     }
 
+    getPlayerNameByCardId(cardId) {
+        const { cards, players } = this.props;
+        const cardIndex = cards.indexOf(cardId);
+        const playerId = Math.floor(cardIndex / CARDS_IN_HAND_NR);
+        return players[playerId].name;
+    }
+
     revealCards(cardsToVoteFor, revealMaster, masterId) {
-        console.log(...arguments);
-        return cardsToVoteFor.map(id => <img key={id} className={"table-card " + (revealMaster && id === masterId ? "master" : "")} src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>);
+        return cardsToVoteFor.map(id =>
+            <div className={"table-card " + (revealMaster && id === masterId ? "master" : "")}>
+                <img key={id} src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>
+                {revealMaster && <pre className="card-owner">{this.getPlayerNameByCardId(id)}</pre>}
+            </div>);
     }
 
     render() {

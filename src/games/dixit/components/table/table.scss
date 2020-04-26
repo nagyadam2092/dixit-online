@@ -17,8 +17,15 @@
 
     .table-card {
       position: relative;
-      width: 100%;
-      border-radius: 10px;
+        img {
+          width: 100%;
+          border-radius: 10px;
+        }
+
+      .card-owner {
+        color: white;
+        text-align: center;
+      }
     }
 
     .master {

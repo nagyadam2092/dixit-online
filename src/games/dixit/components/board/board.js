@@ -90,7 +90,7 @@ export class DixitBoard extends React.Component {
     }
 
     getScores() {
-        return (<div className="scores"><br/>
+        return (<div>
             <pre>{JSON.stringify(this.getScoresWithNames(), null, 2)}</pre>
         </div>);
     }
@@ -148,17 +148,16 @@ export class DixitBoard extends React.Component {
                 {this.state.message && <div className="jqbox_overlay" onClick={this.emptyMessage.bind(this)}></div>}
                 {this.state.message && <h1 className="jqbox_innerhtml">{this.state.message}</h1>}
                 <pre className="scores">Scores: {this.getScores()}
-                    <br/><pre>Turn nr: {this.props.ctx.turn}</pre>
+                    Turn nr: {this.props.ctx.turn}
                 </pre>
                 <div className="game-table">
                     <Table isTrickStage={this.isTrickStage()} faceDownCardNr={this.getPutDownCardsNr()}
                            isVoteStage={this.isVoteStage()} cardsToVoteFor={this.props.G.cardsToVoteFor}
                            vote={this.vote} isActive={isActive} acknowledgeTurn={this.acknowledgeTurn.bind(this)}
-                           isAcknowledgeStage={this.isAcknowledgeStage()} master={this.props.G.master}/>
+                           isAcknowledgeStage={this.isAcknowledgeStage()} master={this.props.G.master}
+                           cards={this.props.G.cards} players={this.props.gameMetadata}/>
                     <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
                            cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
-                    {this.props.G.previousRound &&
-                    <PreviousRound previousRound={this.props.G.previousRound} players={this.props.gameMetadata}/>}
                 </div>
             </div>
         );
