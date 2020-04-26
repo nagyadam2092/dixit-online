@@ -12,6 +12,7 @@ import { Cards } from '../cards/cards';
 import './board.scss';
 import { PreviousRound } from "../previous-round/previous-round";
 import { getCardIds, getCardURL, getBackCardURL } from '../../utils/game.utils';
+import { TopMenu } from "../top-menu/top-menu";
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -82,12 +83,15 @@ export class DixitBoard extends React.Component {
             .every(stage => stage === 'acknowledge');
     }
 
+    currentTurn() {
+        return this.props.ctx.activePlayers && Object.values(this.props.ctx.activePlayers)[0];
+    }
+
     getScores() {
-        return (<div className="scores">Scoring: <br/><pre>{JSON.stringify(this.getScoresWithNames(), null, 2) }</pre></div>);
+        return (<div className="scores"><br/><pre>{JSON.stringify(this.getScoresWithNames(), null, 2) }</pre></div>);
     }
 
     getScoresWithNames() {
-        // return '';
         const enrichedScores = {};
         for (let id in this.props.G.scores) {
             enrichedScores[this.getPlayerNameByID(id)] = this.props.G.scores[id];
@@ -134,19 +138,18 @@ export class DixitBoard extends React.Component {
 
         return (
             <div>
+                <TopMenu playerName={name} isActive={this.props.isActive} currentTurn={this.currentTurn()} waitingForNames={this.getWaitingForNames()} />
                 {this.state.message && <div className="jqbox_overlay" onClick={this.emptyMessage.bind(this)}></div>}
                 {this.state.message && <h1 className="jqbox_innerhtml">{this.state.message}</h1>}
-                <pre>Hi, {name}</pre>
-                <pre className="scores">Scores: {this.getScores()}</pre>
-                <pre>Turn nr: {this.props.ctx.turn}</pre>
-                {this.props.isActive && <h1>It's your turn!</h1>}
+                <pre className="scores">Scores: {this.getScores()}
+                    <br/><pre>Turn nr: {this.props.ctx.turn}</pre>
+                </pre>
                 {this.props.isActive && this.isAcknowledgeStage() && <button onClick={this.acknowledgeTurn.bind(this)}>GET ME TO THE NEXT ROUND</button>}
                 {this.isTrickStage() && new Array(this.getPutDownCardsNr()).fill(<img src={getBackCardURL()} className="card_back"/>)}
                 {this.isVoteStage() && <div>
                     <h1>LET'S VOTE</h1>
                     {this.props.G.cardsToVoteFor.map(id => <img key={id} className="card" src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>)}
                 </div>}
-                {<div>Waiting for other players... ({this.getWaitingForNames()})</div>}
                 <Cards cards={this.props.G.cards} playerID={+this.props.playerID} cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>
                 {this.props.G.previousRound && <PreviousRound previousRound={this.props.G.previousRound} players={this.props.gameMetadata}/>}
             </div>

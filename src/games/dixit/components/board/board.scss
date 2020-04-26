@@ -6,17 +6,17 @@
  * https://opensource.org/licenses/MIT.
  */
 
-#board {
-    border-collapse: collapse;
-    font-family: monospace;
-}
-
-#winner {
-    margin-top: 25px;
-    width: 168px;
-    text-align: center;
-}
-
+//#board {
+//    border-collapse: collapse;
+//    font-family: monospace;
+//}
+//
+//#winner {
+//    margin-top: 25px;
+//    width: 168px;
+//    text-align: center;
+//}
+//
 td {
     text-align: center;
     font-weight: bold;
@@ -39,7 +39,17 @@ td.active:hover {
 }
 
 
+// reset styles
+#lobby-view {
+    padding: 0 !important;
+}
+html, body {
+    //height: none;
+}
+
 /* custom */
+@import "src/games/dixit/sass/variables";
+
 .hidden {
     display: none;
 }

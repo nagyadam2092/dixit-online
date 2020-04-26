@@ -1,0 +1,32 @@
+@import "src/games/dixit/sass/variables";
+
+$top-menu-height: 77px;
+$spacing-between-items: 23px;
+
+.top-menu-container {
+  position: fixed;
+  width: 100%;
+  height: 300px;
+  font-size: $font-size;
+
+  .top-menu-item {
+    width: 100%;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    height: $top-menu-height;
+    line-height: $top-menu-height;
+    vertical-align: middle;
+    margin-bottom: $spacing-between-items;
+  }
+
+  .player-name {
+    background-color: $grey;
+  }
+
+  .player-info {
+    background-color: $darkBlue;
+  }
+
+}
