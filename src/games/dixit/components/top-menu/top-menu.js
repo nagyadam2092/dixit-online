@@ -19,14 +19,14 @@ export class TopMenu extends React.Component {
     };
 
     render() {
-        const {playerName, isActive, waitingForNames} = this.props;
+        const {playerName, isActive, waitingForNames, currentTurn} = this.props;
         return (
             <div className='top-menu-container'>
                 <div className='top-menu-item player-name'>Welcome, {playerName}</div>
-                <div className='top-menu-item player-info'>
+                {currentTurn !== 'acknowledge' && <div className={'top-menu-item player-info ' + (isActive ? 'your-turn': '')}>
                     {isActive && <span>Your turn, choose a card!</span>}
                     {!isActive && waitingForNames && <span title={waitingForNames}>Waiting for other players...</span>}
-                </div>
+                </div>}
             </div>
         );
     }

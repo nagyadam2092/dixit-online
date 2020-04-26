@@ -4,8 +4,15 @@
   width: 100%;
 
   .acknowledge-button {
-    margin: 10px auto;
+    font-size: $font-size;
+    background-color: $pink;
+    border-radius:4px;
+    cursor:pointer;
+    color: white;
+    text-shadow:0px 1px 0px #b23e35;
     display: block;
+    margin: 10px auto;
+    border: $cyan 2px solid;
   }
 
   .cards-container {
