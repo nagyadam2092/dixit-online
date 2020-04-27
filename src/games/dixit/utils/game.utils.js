@@ -1,37 +1,15 @@
 export function calculateScores(G) {
-    const voteVals = Object.values(G.votes);
-    const masterVotes = voteVals.filter(voteVal => voteVal === G.master[1]);
-    const scores = Object.keys(G.scores).reduce((acc, playerId) => {
-        const isMasterBusted = masterVotes.length === 0 || (masterVotes.length === Object.keys(G.scores).length - 1);
-        if (+playerId === +G.master[0]) {
-            if (isMasterBusted) {
-                return {
-                    ...acc,
-                    [playerId]: G.scores[playerId],
-                };
-            }
-            return {
-                ...acc,
-                [playerId]: G.scores[playerId] + 3,
-            };
-        }
-        const herCards = getCardIds(G.cards, +playerId, G.cardsInHandNr);
-        const votesOnHer = Object.values(G.votes).reduce((acc, cardId) => {
-            if (herCards.includes(cardId)) {
-                return acc + 1;
-            }
-            return acc;
-        }, 0);
-        return {
-            ...acc,
-            [playerId]:  G.scores[playerId] + (isMasterBusted ? 3 : 0) + votesOnHer,
-        };
-    }, {});
-    return scores;
+    const scoresCopy = {
+        ...G.scores,
+    };
+    for (let [playerId, score] of Object.entries(scoresCopy)) {
+        scoresCopy[playerId] += calculateScoreByPlayerId(G, playerId);
+    }
+    return scoresCopy;
 }
 
 export function calculateScoreByPlayerId(G, playerId) {
-    if (!playerId) {
+    if (!playerId && playerId !== 0) {
         return 0;
     }
     const voteVals = Object.values(G.votes);

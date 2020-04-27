@@ -64,14 +64,21 @@ export class Table extends React.Component {
     }
 
     revealCards(cardsToVoteFor, revealMaster, masterId) {
-        return cardsToVoteFor.map(id =>
-            <div className={'table-card ' + (revealMaster && id === masterId ? 'master' : '')}>
+        return cardsToVoteFor.map(id => {
+            let playerId;
+            if (+id === +masterId) {
+                playerId = this.props.G.master[0];
+            } else {
+                playerId = getKeyByValue(this.props.G.tricks, id)
+            }
+            return (<div className={'table-card ' + (revealMaster && id === masterId ? 'master' : '')}>
                 <img key={id} src={getCardURL(id)} onClick={this.vote.bind(this, id)}/>
                 {revealMaster && id === masterId && <div className='overlay'></div>}
                 {revealMaster && <div className='players-voted-on-card'>{this.getVotedOnCardNamesById(id)}</div>}
                 {revealMaster && <pre className='card-owner'>{this.getPlayerNameByCardId(id)}</pre>}
-                {revealMaster && <pre className='card-owner'>{calculateScoreByPlayerId(this.props.G, getKeyByValue(this.props.G.votes, id))}</pre>}
-            </div>);
+                {revealMaster && <pre className='card-owner'>{calculateScoreByPlayerId(this.props.G, playerId)}</pre>}
+            </div>)
+        });
     }
 
     render() {
