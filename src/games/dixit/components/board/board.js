@@ -14,6 +14,7 @@ import { PreviousRound } from '../previous-round/previous-round';
 import { getCardIds } from '../../utils/game.utils';
 import { TopMenu } from '../top-menu/top-menu';
 import { Table } from '../table/table';
+import { GameOver } from "../game-over/game-over";
 
 export class DixitBoard extends React.Component {
     static propTypes = {
@@ -158,6 +159,7 @@ export class DixitBoard extends React.Component {
                            cards={this.props.G.cards} players={this.props.gameMetadata} votes={this.props.G.votes} playerID={playerID} G={this.props.G}/>
                     {!this.isVoteStage() && !this.isAcknowledgeStage() && <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
                            cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>}
+                    {this.props.G.gameOver && <GameOver scores={this.props.G.scores} players={this.props.gameMetadata} />}
                 </div>
             </div>
         );
