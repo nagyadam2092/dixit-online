@@ -16,14 +16,15 @@ export class TopMenu extends React.Component {
         isActive: PropTypes.bool.isRequired,
         waitingForNames: PropTypes.string.isRequired,
         currentTurn: PropTypes.string.isRequired,
+        toggleScores: PropTypes.func.isRequired,
     };
 
     render() {
         const {playerName, isActive, waitingForNames, currentTurn} = this.props;
         return (
             <div className='top-menu-container'>
-                <div className='top-menu-item player-name'>Welcome, {playerName}</div>
-                {currentTurn !== 'acknowledge' && <div className={'top-menu-item player-info ' + (isActive ? 'your-turn': '')}>
+                <div className='top-menu-item player-name' onClick={this.props.toggleScores}>Welcome, {playerName}</div>
+                {currentTurn !== 'acknowledge' && <div className={'top-menu-item player-info ' + (isActive ? 'your-turn': '')}  onClick={this.props.toggleScores}>
                     {isActive && <span>Your turn, choose a card!</span>}
                     {!isActive && waitingForNames && <span title={waitingForNames}>Waiting for other players...</span>}
                 </div>}

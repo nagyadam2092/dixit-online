@@ -27,6 +27,7 @@ export class DixitBoard extends React.Component {
     };
     state = {
         message: '',
+        showScores: false,
     };
 
     onClick = id => {
@@ -137,6 +138,13 @@ export class DixitBoard extends React.Component {
         return this.props.gameMetadata.length - Object.keys(this.props.ctx.activePlayers).length;
     }
 
+    toggleScores() {
+        this.setState((prevState) => ({
+            ...prevState,
+            showScores: !prevState.showScores
+        }))
+    }
+
     render() {
         const {isActive, playerID} = this.props;
         const name = this.getCurrentPlayerName();
@@ -145,12 +153,12 @@ export class DixitBoard extends React.Component {
         return (
             <div className='game-container'>
                 {!this.props.G.gameOver && <TopMenu playerName={name} isActive={this.props.isActive} currentTurn={this.currentTurn()}
-                         waitingForNames={this.getWaitingForNames()}/>}
+                         waitingForNames={this.getWaitingForNames()} toggleScores={this.toggleScores.bind(this)}/>}
                 {this.state.message && <div className='jqbox_overlay' onClick={this.emptyMessage.bind(this)}></div>}
                 {this.state.message && <h1 className='jqbox_innerhtml'>{this.state.message}</h1>}
-                <pre className='scores'>Scores: {this.getScores()}
+                {this.state.showScores && <pre className='scores'>Scores: {this.getScores()}
                     Turn nr: {this.props.ctx.turn}
-                </pre>
+                </pre>}
                 <div className='game-table'>
                     <Table isTrickStage={this.isTrickStage()} faceDownCardNr={this.getPutDownCardsNr()}
                            isVoteStage={this.isVoteStage()} cardsToVoteFor={this.props.G.cardsToVoteFor}
