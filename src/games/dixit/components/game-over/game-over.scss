@@ -1,0 +1,108 @@
+@import "src/games/dixit/sass/variables";
+
+//table {
+//  border-collapse: collapse;
+//  width: 100%;
+//  background-color: $blue;
+//}
+//
+//th, td {
+//  text-align: left;
+//  padding: 8px;
+//}
+//
+//tr, td {
+//  background-color: $blue;
+//  color: white;
+//}
+
+//tr:nth-child(even) {
+//  background-color: $blue;
+//}
+
+table {
+  /* Remove spacing between table cells (from Normalize.css) */
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid $darkBlue;
+}
+
+table caption {
+  color: white;
+  font-size: 2 * $font-size;
+  padding: 1em 0;
+  text-align: center;
+}
+
+table td,
+table th {
+  border-left: 1px solid $darkBlue;/*  inner column border */
+  border-width: 0 0 0 1px;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible; /*to make ths where the title is really long work*/
+  padding: 0.5em 1em; /* cell padding */
+  color: white;
+}
+
+table thead {
+  background-color: $darkBlue;
+  color: white;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+/*
+striping:
+   even - #fff (white)
+   odd  - #f2f2f2 (light gray)
+*/
+table td {
+  background-color: transparent;
+}
+table-odd td {
+  background-color: #f2f2f2;
+}
+
+/* nth-child selector for modern browsers */
+table-striped tr:nth-child(2n-1) td {
+  background-color: #f2f2f2;
+}
+
+/* BORDERED TABLES */
+table-bordered td {
+  border-bottom: 1px solid $darkBlue;
+}
+table-bordered tbody > tr:last-child > td {
+  border-bottom-width: 0;
+}
+
+
+/* HORIZONTAL BORDERED TABLES */
+
+table-horizontal td,
+table-horizontal th {
+  border-width: 0 0 1px 0;
+  border-bottom: 1px solid #cbcbcb;
+}
+table-horizontal tbody > tr:last-child > td {
+  border-bottom-width: 0;
+}
+
+.header-button-button {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+  color: white;
+}
+
+
+
+.header-button-button:hover {
+  background: $darkGrey;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+}

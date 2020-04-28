@@ -47,10 +47,13 @@ const useSortableData = (items, config = null) => {
 export const GameOver = (props) => {
     const scoresArray = Object.keys(props.scores).map(key => ({
         name: props.players.find(player => +player.id === +key).name,
-        // name: key,
         score: props.scores[key],
     }));
-    const { items, requestSort, sortConfig } = useSortableData(scoresArray);
+    const hookConfig = {
+        key: 'score',
+        direction: 'descending',
+    };
+    const { items, requestSort, sortConfig } = useSortableData(scoresArray, hookConfig);
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
             return;
@@ -58,7 +61,7 @@ export const GameOver = (props) => {
         return sortConfig.key === name ? sortConfig.direction : undefined;
     };
     return (
-        <table>
+        <table className="pure-table pure-table-bordered" align="center">
             <caption>Game Over</caption>
             <thead>
             <tr>
@@ -66,7 +69,7 @@ export const GameOver = (props) => {
                     <button
                         type="button"
                         onClick={() => requestSort('name')}
-                        className={getClassNamesFor('name')}
+                        className="header-button-button"
                     >
                         Name
                     </button>
@@ -75,7 +78,7 @@ export const GameOver = (props) => {
                     <button
                         type="button"
                         onClick={() => requestSort('score')}
-                        className={getClassNamesFor('score')}
+                        className="header-button-button"
                     >
                         Score
                     </button>

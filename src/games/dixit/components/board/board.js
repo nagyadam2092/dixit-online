@@ -144,8 +144,8 @@ export class DixitBoard extends React.Component {
 
         return (
             <div className='game-container'>
-                <TopMenu playerName={name} isActive={this.props.isActive} currentTurn={this.currentTurn()}
-                         waitingForNames={this.getWaitingForNames()}/>
+                {!this.props.G.gameOver && <TopMenu playerName={name} isActive={this.props.isActive} currentTurn={this.currentTurn()}
+                         waitingForNames={this.getWaitingForNames()}/>}
                 {this.state.message && <div className='jqbox_overlay' onClick={this.emptyMessage.bind(this)}></div>}
                 {this.state.message && <h1 className='jqbox_innerhtml'>{this.state.message}</h1>}
                 <pre className='scores'>Scores: {this.getScores()}
@@ -157,7 +157,7 @@ export class DixitBoard extends React.Component {
                            vote={this.vote} isActive={isActive} acknowledgeTurn={this.acknowledgeTurn.bind(this)}
                            isAcknowledgeStage={this.isAcknowledgeStage()} master={this.props.G.master}
                            cards={this.props.G.cards} players={this.props.gameMetadata} votes={this.props.G.votes} playerID={playerID} G={this.props.G}/>
-                    {!this.isVoteStage() && !this.isAcknowledgeStage() && <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
+                    {!this.props.G.gameOver && !this.isVoteStage() && !this.isAcknowledgeStage() && <Cards cards={this.props.G.cards} playerID={+this.props.playerID}
                            cardsInHandNr={this.props.G.cardsInHandNr} click={this.onClick}/>}
                     {this.props.G.gameOver && <GameOver scores={this.props.G.scores} players={this.props.gameMetadata} />}
                 </div>
