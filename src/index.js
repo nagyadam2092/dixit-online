@@ -29,35 +29,42 @@ const server = `https://${window.location.hostname}`;
 const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
 
 class App extends React.Component {
-    state = { playerID: null };
+    // state = { playerID: null };
 
     render() {
-        if (this.state.playerID === null) {
-            return (
-                <div className='frontpage'>
-                    <div className="container">
-                        <img src="https://3.bp.blogspot.com/-3Ueu7NWuelI/WhsLvGfxt0I/AAAAAAAAVHc/todoDa7OV5sgKnhy8dkw0DuxFZuphHIdQCLcBGAs/s640/Dixit_Banner.png" alt=""/>
-                        <div className="logo">
-                            <a href="/" title="Home" rel="home" className="notranslate logo">
-                                <i>&gt;</i><b>keylight</b><i>/</i>
-                            </a>
-                            &nbsp;
-                            edition
-                        </div>
-                        <Lobby
-                            gameServer={server}
-                            lobbyServer={server}
-                            gameComponents={importedGames}
-                        />
-                    </div>
-                </div>
-            );
-        }
         return (
-            <div>
-                <DixitClient playerID={this.state.playerID} />
-            </div>
+            <Lobby
+                gameServer={server}
+                lobbyServer={server}
+                gameComponents={importedGames}
+            />
         );
+        // if (this.state.playerID === null) {
+        //     return (
+                // <div className='frontpage'>
+                //     <div className="container">
+                //         <img src="https://3.bp.blogspot.com/-3Ueu7NWuelI/WhsLvGfxt0I/AAAAAAAAVHc/todoDa7OV5sgKnhy8dkw0DuxFZuphHIdQCLcBGAs/s640/Dixit_Banner.png" alt=""/>
+                //         <div className="logo">
+                //             <a href="/" title="Home" rel="home" className="notranslate logo">
+                //                 <i>&gt;</i><b>keylight</b><i>/</i>
+                //             </a>
+                //             &nbsp;
+                //             edition
+                //         </div>
+                //         <Lobby
+                //             gameServer={server}
+                //             lobbyServer={server}
+                //             gameComponents={importedGames}
+                //         />
+                //     </div>
+                // </div>
+            // );
+        // }
+        // return (
+        //     <div>
+        //         <DixitClient playerID={this.state.playerID} />
+        //     </div>
+        // );
     }
 }
 
