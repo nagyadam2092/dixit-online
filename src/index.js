@@ -13,6 +13,7 @@ import { SocketIO } from "boardgame.io/multiplayer";
 import { Dixit } from "./games/dixit/game";
 import { DixitBoard } from "./games/dixit/components/board/board";
 import { Lobby } from 'boardgame.io/react';
+import './index.css';
 const DixitClient = Client({
     game: Dixit,
     board: DixitBoard,
