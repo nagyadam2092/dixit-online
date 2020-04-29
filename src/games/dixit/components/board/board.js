@@ -10,7 +10,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Cards } from '../cards/cards';
 import './board.scss';
-import { PreviousRound } from '../previous-round/previous-round';
 import { getCardIds } from '../../utils/game.utils';
 import { TopMenu } from '../top-menu/top-menu';
 import { Table } from '../table/table';
@@ -28,7 +27,21 @@ export class DixitBoard extends React.Component {
     state = {
         message: '',
         showScores: false,
+        showLogs: false,
     };
+
+    componentDidMount() {
+        if (window.cheet) {
+            window.cheet('i d d q d', this.toggleShowLogs.bind(this))
+        }
+    }
+
+    toggleShowLogs() {
+        this.setState((prevState) => ({
+            ...prevState,
+            showLogs: !prevState.showLogs
+        }));
+    }
 
     onClick = id => {
         if (!this.props.isActive) {
@@ -142,13 +155,15 @@ export class DixitBoard extends React.Component {
         this.setState((prevState) => ({
             ...prevState,
             showScores: !prevState.showScores
-        }))
+        }));
     }
 
     render() {
         const {isActive, playerID} = this.props;
         const name = this.getCurrentPlayerName();
-        console.log(this.props.G);
+        if (this.state.showLogs) {
+            console.log(this.props);
+        }
 
         return (
             <div className='game-container'>
