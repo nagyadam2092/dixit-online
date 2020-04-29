@@ -90,7 +90,7 @@ export class Table extends React.Component {
                     {isTrickStage && this.getFaceDownCards(faceDownCardNr)}
                     {(isVoteStage || isAcknowledgeStage) && this.revealCards(cardsToVoteFor, isAcknowledgeStage, master[1])}
                 </div>
-                {isAcknowledgeStage && <pre>YOU GET: {calculateScoreByPlayerId(this.props.G, +this.props.playerID)}</pre>}
+                {isAcknowledgeStage && <pre className='you-get-score'>YOU GET: {calculateScoreByPlayerId(this.props.G, +this.props.playerID)}</pre>}
             </div>
         );
     }
