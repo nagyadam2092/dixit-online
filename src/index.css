@@ -61,3 +61,22 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+
+/* Header */
+
+.logo {
+  color: #fff;
+  font-family: Titillium Web,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+  font-weight: 400;
+}
+
+.logo, header .logo:hover {
+  text-decoration: none;
+}
+
+.logo i {
+  color: #a6d600;
+}
+
+

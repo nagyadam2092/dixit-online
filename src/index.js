@@ -34,6 +34,12 @@ class App extends React.Component {
         if (this.state.playerID === null) {
             return (
                 <div>
+                    <div className="logo">
+                        <a href="/" title="Home" rel="home" className="notranslate logo">
+                            <i>&gt;</i><b>keylight</b><i>/</i>
+                        </a>
+                    </div>
+                    <img src="https://3.bp.blogspot.com/-3Ueu7NWuelI/WhsLvGfxt0I/AAAAAAAAVHc/todoDa7OV5sgKnhy8dkw0DuxFZuphHIdQCLcBGAs/s640/Dixit_Banner.png" alt=""/>
                     <Lobby
                         gameServer={server}
                         lobbyServer={server}
