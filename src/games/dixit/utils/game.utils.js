@@ -56,7 +56,7 @@ export function getCardIds(cards, playerID, cardsInHandNr) {
 }
 
 export function getCardURL(id) {
-    return `/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg, /assets/img/cards/card_${id.toString().padStart(5, '0')}.png, /assets/img/cards/card_${id.toString().padStart(5, '0')}.jpeg`;
+    return `url(/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpg), url(/assets/img/cards/card_${id.toString().padStart(5, '0')}.png), url(/assets/img/cards/card_${id.toString().padStart(5, '0')}.jpeg)`;
 }
 
 export function getBackCardURL() {

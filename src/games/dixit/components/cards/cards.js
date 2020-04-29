@@ -22,7 +22,7 @@ export class Cards extends React.Component {
             <div className='cards'>
                 {cardIds.map(id => (
                     <div className='card' onClick={this.onClick.bind(this, id)} key={id}>
-                        <div className='card-face' style={{backgroundImage: `url(${getCardURL(id)})`}}>
+                        <div className='card-face' style={{backgroundImage: getCardURL(id)}}>
                             <div className='card-label'>
                                 {/*{id}*/}
                             </div>
